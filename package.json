@@ -1,0 +1,19 @@
+{
+  "name": "zk-identity-commitment",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bip39": "^3.1.0",
+    "circomlibjs": "^0.1.7",
+    "dotenv": "^16.5.0",
+    "ethers": "^6.14.3",
+    "futoin-hkdf": "^1.5.3"
+  }
+}
