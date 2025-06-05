@@ -4,13 +4,14 @@ A Node.js script that generates **user-specific identity commitments** for Zero-
 
 ---
 
-## Features
+## Overview
 
-It streamlines the creation of ZK identity commitments by:
+At a high level, the script performs the following steps:
 
-* **ERC721 Membership Gating**: Automatically verifying ERC721 token ownership as a prerequisite for identity generation, ensuring only eligible users can proceed.
-* **Deterministic Key Derivation**: Utilizing BIP39 for mnemonic phrase generation and HKDF to deterministically derive two distinct secret keys: an **identity secret** (`zkSecretIdentity`) and a **secret nullifier** (`zkIdentityNullifier`).
-* **ZK-Proof Friendly Hashing**: Combining these derived keys using the **Poseidon hash function** to produce the final, circuit-efficient ZK Identity Commitment.
+1.  **Membership Check**: Verifies if the provided wallet address owns the specified ERC721 token. This is a mandatory gating mechanism.
+2.  **Seed Generation**: A BIP39 mnemonic is generated, and from it, a secure 512-bit seed is deterministically derived. An optional passphrase can be used to enhance security.
+3.  **Key Derivation**: Using HKDF (HMAC-based Key Derivation Function), two distinct secret keys (`zkSecretIdentity` and `zkIdentityNullifier`) are generated from the seed. These keys are crucial for the ZK proof.
+4.  **Commitment Calculation**: The final ZK Identity Commitment is computed by applying the Poseidon hash function to the two derived secret keys. This commitment serves as the public representation of the ZK identity.
 
 ---
 
@@ -36,15 +37,4 @@ To generate an identity commitment, simply run the script:
 node generateCommitment.js 
 ```
 
-The script will output the generated mnemonic phrase, derived secret keys, and the final identity commitment. It will also perform the ERC721 membership check and exit with an error if the wallet is not an eligible member.
-
----
-
-## Overview
-
-At a high level, the script performs the following steps:
-
-1.  **Membership Check**: Verifies if the provided wallet address owns the specified ERC721 token. This is a mandatory gating mechanism.
-2.  **Seed Generation**: A BIP39 mnemonic is generated, and from it, a secure 512-bit seed is deterministically derived. An optional passphrase can be used to enhance security.
-3.  **Key Derivation**: Using HKDF (HMAC-based Key Derivation Function), two distinct secret keys (`zkSecretIdentity` and `zkIdentityNullifier`) are generated from the seed. These keys are crucial for the ZK proof.
-4.  **Commitment Calculation**: The final ZK Identity Commitment is computed by applying the Poseidon hash function to the two derived secret keys. This commitment serves as the public representation of the ZK identity.
+It will output the generated mnemonic phrase, derived secret keys, and the final identity commitment. It will also perform the ERC721 membership check and exit with an error if the wallet is not an eligible member.
